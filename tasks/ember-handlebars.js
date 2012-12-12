@@ -1,3 +1,4 @@
+/*global module:false*/
 /*
  * grunt-ember-handlebars
  * https://github.com/yaymukund/grunt-ember-handlebars
@@ -18,21 +19,24 @@
  * headless-ember and ember.js can both be found in the main Ember repo:
  *   https://github.com/emberjs/ember.js/tree/master/lib
  */
-
 var precompiler = require('./lib/precompiler'),
-    path = require('path');
+	path = require('path');
 
-module.exports = function(grunt) {
-  grunt.registerMultiTask('ember_handlebars', 'Precompile Ember Handlebars templates', function() {
-    var files = grunt.file.expandFiles(this.file.src);
-    grunt.utils._.each(files, function(file) {
-      grunt.log.write('Precompiling "' + file + '" to "' + this.dest + '"\n');
+module.exports = function (grunt) {
+	grunt.registerMultiTask('ember_handlebars', 'Pre-compile Ember Handlebars templates', function () {
+		var
+			baseDir = this.data.baseDir,
+			files = grunt.file.expandFiles(this.file.src);
 
-      var compiled = precompiler.precompile(file);
-          out = path.join(this.dest, compiled.filename);
+		grunt.utils._.each(files, function (file) {
+			grunt.log.writeln('Pre-compiling "' + file + '" to "' + this.dest + '"');
 
-      grunt.file.write(out, compiled.src, 'utf8');
+			var
+				compiled = precompiler.precompile(file, baseDir),
+				out = path.join(this.dest, compiled.filename);
 
-    }, {dest: this.file.dest});
-  });
+			grunt.file.write(out, compiled.src, 'utf8');
+
+		}, {dest: this.file.dest});
+	});
 };
