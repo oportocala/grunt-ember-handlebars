@@ -28,7 +28,7 @@ module.exports = function (grunt) {
 			baseDir = this.data.baseDir,
 			files = grunt.file.expandFiles(this.file.src);
 
-		grunt.utils._.each(files, function (file) {
+		grunt.util._.each(files, function (file) {
 			grunt.log.writeln('Pre-compiling "' + file + '" to "' + this.dest + '"');
 
 			var
